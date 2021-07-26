@@ -1,16 +1,23 @@
 'use strict'
 
-// let imagesDiv=document.getElementById('images-div');
+let imagesDiv = document.getElementById('images-div');
+let buttonElement = document.getElementById('button')
 let leftImgElement = document.getElementById('left-image');
 let middleImgElement = document.getElementById('middle-image')
 let rightImgElement = document.getElementById('right-image');
 
-let maxAttempts = 10;
+let maxAttempts = 25;
 let userAttemptsCounter = 0;
 
 let leftImgIndex;
 let middleImgIndex;
 let rightImgIndex;
+
+let nameArray = [];
+
+let voteArray = [];
+
+let shownArray = [];
 
 function Pics(name, src) {
     this.name = name;
@@ -19,7 +26,10 @@ function Pics(name, src) {
     this.shown = 0;
 
     picturs.push(this);
+    nameArray.push(this.name);
+
 }
+
 let picturs = [];
 
 new Pics('bag', 'img/bag.jpg')
@@ -35,7 +45,7 @@ new Pics('dragon', 'img/dragon.jpg')
 new Pics('pen', 'img/pen.jpg')
 new Pics('pet-sweep', 'img/pet-sweep.jpg')
 
-console.log(picturs);
+// console.log(picturs);
 
 function randomIndex() {
     return Math.floor(Math.random() * picturs.length);
@@ -51,26 +61,26 @@ function renderImg() {
         leftImgIndex = randomIndex();
         middleImgIndex = randomIndex();
         rightImgIndex = randomIndex();
-        // console.log(leftImgIndex);
-        // console.log(middleImgIndex);
-        // console.log(rightImgIndex);
-        // console.log('hello');
 
     }
 
 
     leftImgElement.src = picturs[leftImgIndex].source;
+    picturs[leftImgIndex].shown++
+
     middleImgElement.src = picturs[middleImgIndex].source;
+    picturs[middleImgIndex].shown++
+
     rightImgElement.src = picturs[rightImgIndex].source;
+
+    picturs[rightImgIndex].shown++
 }
 
 renderImg();
 
-let imagesDiv = document.getElementById('images-div');
 imagesDiv.addEventListener('click', userClick);
 
 function userClick(event) {
-    userAttemptsCounter++;
 
 
 
@@ -80,52 +90,138 @@ function userClick(event) {
         if (event.target.id === 'left-image') {
 
             picturs[leftImgIndex].votes++;
-            picturs[leftImgIndex].shown++;
+            renderImg();
 
 
         }
         else if (event.target.id === 'middle-image') {
             picturs[middleImgIndex].votes++;
-            picturs[middleImgIndex].shown++;
+            renderImg();
 
         }
         else if (event.target.id === 'right-image') {
             picturs[rightImgIndex].votes++;
-            picturs[rightImgIndex].shown++;
+            renderImg();
 
+        } else {
+            alert("please pick a picture")
+            userAttemptsCounter++;
         }
+        // while (  ) {
+            
+        // }
 
-        renderImg();
+        // renderImg();
 
     }
     else {
-        let form = document.getElementById('form');
+        buttonElement.hidden = false;
 
-        // adding the event listener
-        // form.addEventListener('click', formSubmitter);
+        buttonElement.addEventListener('click', showingList);
 
-        // // create the function that will rn when we submit the form
-
-        // function formSubmitter(event) {
-        //     event.preventDefault();
-
+        function showingList() {
 
             let list = document.getElementById('results-list');
 
-            list.addEventListener('click', userClick);
-       
+
+
             for (let i = 0; i < picturs.length; i++) {
-              
+
                 let listItem = document.createElement('li');
 
                 list.appendChild(listItem);
 
                 listItem.textContent = `${picturs[i].name} had ${picturs[i].votes} votes, and was seen ${picturs[i].shown}`
             }
-        }
+            buttonElement.removeEventListener('click', showingList);
+
             // remove event listener:
-            leftImgElement.removeEventListener('click', userClick);
-            rightImgElement.removeEventListener('click', userClick);
-            middleImgElement.removeEventListener('click', userClick);
+            // imagesDiv.removeEventListener('click',userClick);
+
         }
-    // }
+        for (let i = 0; i < picturs.length; i++) {
+            
+            voteArray.push(picturs[i].votes);
+            shownArray.push(picturs[i].shown);
+
+        }
+        imagesDiv.removeEventListener('click', userClick);
+        // showChart();
+    }
+    userAttemptsCounter++;
+
+}
+
+// function showChart() {
+
+//     const data = {
+//         labels: nameArray,
+//         datasets: [{
+//             label: 'Votes',
+//             data: voteArray,
+//             backgroundColor: [
+//                 'rgba(255, 99, 132, 0.2)',
+//                 'rgba(255, 159, 64, 0.2)',
+//                 'rgba(255, 205, 86, 0.2)',
+//                 'rgba(75, 192, 192, 0.2)',
+//                 'rgba(54, 162, 235, 0.2)',
+//                 'rgba(153, 102, 255, 0.2)',
+//                 'rgba(201, 203, 207, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgb(255, 99, 132)',
+//                 'rgb(255, 159, 64)',
+//                 'rgb(255, 205, 86)',
+//                 'rgb(75, 192, 192)',
+//                 'rgb(54, 162, 235)',
+//                 'rgb(153, 102, 255)',
+//                 'rgb(201, 203, 207)'
+//             ],
+//             borderWidth: 1
+//         },
+//         {
+//             label: 'Shown',
+//             data: shownArray,
+//             backgroundColor: [
+//                 'rgba(255, 99, 132, 0.2)',
+//                 'rgba(255, 159, 64, 0.2)',
+//                 'rgba(255, 205, 86, 0.2)',
+//                 'rgba(75, 192, 192, 0.2)',
+//                 'rgba(54, 162, 235, 0.2)',
+//                 'rgba(153, 102, 255, 0.2)',
+//                 'rgba(201, 203, 207, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgb(255, 99, 132)',
+//                 'rgb(255, 159, 64)',
+//                 'rgb(255, 205, 86)',
+//                 'rgb(75, 192, 192)',
+//                 'rgb(54, 162, 235)',
+//                 'rgb(153, 102, 255)',
+//                 'rgb(201, 203, 207)'
+//             ],
+//             borderWidth: 1
+//         }
+
+//         ]
+//     };
+
+//     const config = {
+//         type: 'bar',
+//         data: data,
+//         options: {
+//           scales: {
+//             y: {
+//               beginAtZero: true
+//             }
+//           }
+//         },
+//       };
+    
+    
+//       var myChart = new Chart(
+//         document.getElementById('myChart'),
+//         config
+//       );
+    
+//     }
