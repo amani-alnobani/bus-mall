@@ -21,6 +21,7 @@ img{
     color: rgb(238, 57, 57);
   }
 
+
   button {
     background-color: #4b2037;
     color: white;
@@ -30,7 +31,7 @@ img{
     font-size: 16px;
     margin: 50px 50px 100px 0px;
     cursor: pointer;
-    position:static;
+    position:relative;
     left: 600px;
     top: 150px;
     nav-down: 150px;
