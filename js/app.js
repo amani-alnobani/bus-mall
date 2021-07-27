@@ -6,7 +6,7 @@ let leftImgElement = document.getElementById('left-image');
 let middleImgElement = document.getElementById('middle-image')
 let rightImgElement = document.getElementById('right-image');
 
-let maxAttempts = 25;
+let maxAttempts = 10;
 let userAttemptsCounter = 0;
 
 let leftImgIndex;
@@ -27,6 +27,37 @@ function Pics(name, src) {
 
     picturs.push(this);
     nameArray.push(this.name);
+
+
+}
+
+
+function updateStorage() {
+  
+  
+    let voteStringArr=JSON.stringify(voteArray);
+    let shownStringArr=JSON.stringify(shownArray);
+
+  
+    localStorage.setItem('Img vote',voteStringArr);
+    
+    localStorage.setItem('Img shown',shownStringArr);
+
+    // localStorage.setItem('right Img vote',picturs[rightImgIndex].votes);
+    
+    // localStorage.setItem('right Img shown',picturs[rightImgIndex].shown);
+
+    // localStorage.setItem('middle Img vote',picturs[middleImgIndex].votes);
+    
+    // localStorage.setItem('middle Img shown',picturs[middleImgIndex].shown);
+
+
+  console.log(voteStringArr);
+  console.log(shownStringArr);
+}
+
+function previousStorage() {
+    
 
 }
 
@@ -149,6 +180,8 @@ function userClick(event) {
         }
         imagesDiv.removeEventListener('click', userClick);
         showChart();
+        updateStorage();
+
     }
     userAttemptsCounter++;
 
