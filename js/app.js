@@ -51,18 +51,22 @@ function randomIndex() {
     return Math.floor(Math.random() * picturs.length);
 }
 
+let shownPictures=[];
+
 function renderImg() {
     leftImgIndex = randomIndex();
     middleImgIndex = randomIndex();
     rightImgIndex = randomIndex();
 
-    while (leftImgIndex === middleImgIndex || leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex) {
+
+    while (leftImgIndex === middleImgIndex || leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex||shownPictures.includes(leftImgIndex)||shownPictures.includes(rightImgIndex)||shownPictures.includes(middleImgIndex)) {
 
         leftImgIndex = randomIndex();
         middleImgIndex = randomIndex();
         rightImgIndex = randomIndex();
 
     }
+    shownPictures=[leftImgIndex,rightImgIndex,middleImgIndex];
 
 
     leftImgElement.src = picturs[leftImgIndex].source;
@@ -107,9 +111,7 @@ function userClick(event) {
             alert("please pick a picture")
             userAttemptsCounter++;
         }
-        // while (  ) {
-            
-        // }
+        
 
         // renderImg();
 
