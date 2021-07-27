@@ -35,29 +35,23 @@ function Pics(name, src) {
 function updateStorage() {
   
   
-    let voteStringArr=JSON.stringify(voteArray);
-    let shownStringArr=JSON.stringify(shownArray);
-
+    let stringArr=JSON.stringify(picturs);
   
-    localStorage.setItem('Img vote',voteStringArr);
+    localStorage.setItem('images', stringArr);
     
-    localStorage.setItem('Img shown',shownStringArr);
-
-    // localStorage.setItem('right Img vote',picturs[rightImgIndex].votes);
     
-    // localStorage.setItem('right Img shown',picturs[rightImgIndex].shown);
 
-    // localStorage.setItem('middle Img vote',picturs[middleImgIndex].votes);
-    
-    // localStorage.setItem('middle Img shown',picturs[middleImgIndex].shown);
-
-
-  console.log(voteStringArr);
-  console.log(shownStringArr);
 }
 
 function previousStorage() {
-    
+
+    let data = localStorage.getItem('images');
+    let parsedArray=JSON.parse(data);
+
+    if (parsedArray !== null ) {
+        picturs=parsedArray;
+    }
+
 
 }
 
@@ -180,6 +174,7 @@ function userClick(event) {
         }
         imagesDiv.removeEventListener('click', userClick);
         showChart();
+
         updateStorage();
 
     }
@@ -260,3 +255,4 @@ function showChart() {
       );
     
     }
+    previousStorage();
